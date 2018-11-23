@@ -3,25 +3,29 @@ from flask_mail import Mail, Message
 import requests
 from time import sleep
 
+app = Flask(__name__)
+
 sender = ''
 receiver = ''
 password = ''
-search_phrase = '<li id="1230" onClick="przypomnienie_okno(this.id);" class="zeroproduct"'
-url = 'https://mlecollection.com/sklep/wszystkie/golf-bormio,593#'
-
-app = Flask(__name__)
 
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = sender
-app.config['MAIL_PASSWORD'] =
+app.config['MAIL_PASSWORD'] = password
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
 mail = Mail(app)
 
 @app.route("/")
-def index(search_phrase, url, receiver, sender):
+def index():
+
+    sender = ''
+    receiver = ''
+
+    search_phrase = '<li id="1230" onClick="przypomnienie_okno(this.id);" class="zeroproduct"'
+    url = 'https://mlecollection.com/sklep/wszystkie/golf-bormio,593#'
 
     msg1 = Message("Available!",
                   sender=sender,
@@ -49,7 +53,7 @@ def index(search_phrase, url, receiver, sender):
 
             mail.send(msg2)
 
-        mail.send(msg1)
+    mail.send(msg1)
 
     return 'Mail sent'
 
